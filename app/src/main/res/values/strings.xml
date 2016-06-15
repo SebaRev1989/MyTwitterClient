@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyTwitterClient</string>
+    <string name="login.error.message">No se pudo iniciar sesión %s</string>
 </resources>
