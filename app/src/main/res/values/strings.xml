@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MyTwitterClient</string>
     <string name="login.error.message">No se pudo iniciar sesión %s</string>
+    
+    <string name="main.header.images">Imágenes</string>
+    <string name="main.header.hashtags">Hashtags</string>
+    <string name="main.menu.action.logout">Cerrar sesión</string>
 </resources>
