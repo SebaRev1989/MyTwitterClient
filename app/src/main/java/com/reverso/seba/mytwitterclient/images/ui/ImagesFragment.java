@@ -14,9 +14,9 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.reverso.seba.mytwitterclient.R;
+import com.reverso.seba.mytwitterclient.images.ImagesPresenter;
 import com.reverso.seba.mytwitterclient.images.entities.Image;
 import com.reverso.seba.mytwitterclient.images.ui.adapters.ImagesAdapter;
-import com.reverso.seba.mytwitterclient.images.ui.adapters.ImagesView;
 import com.reverso.seba.mytwitterclient.images.ui.adapters.OnItemClickListener;
 
 import java.util.List;

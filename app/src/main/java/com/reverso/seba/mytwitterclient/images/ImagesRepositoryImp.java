@@ -1,4 +1,4 @@
-package com.reverso.seba.mytwitterclient.images.ui;
+package com.reverso.seba.mytwitterclient.images;
 
 import com.reverso.seba.mytwitterclient.api.CustomTwitterApiClient;
 import com.reverso.seba.mytwitterclient.images.entities.Image;
@@ -11,7 +11,6 @@ import com.twitter.sdk.android.core.models.MediaEntity;
 import com.twitter.sdk.android.core.models.Tweet;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

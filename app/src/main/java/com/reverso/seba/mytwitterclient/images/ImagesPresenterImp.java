@@ -1,7 +1,7 @@
-package com.reverso.seba.mytwitterclient.images.ui;
+package com.reverso.seba.mytwitterclient.images;
 
 import com.reverso.seba.mytwitterclient.images.events.ImagesEvent;
-import com.reverso.seba.mytwitterclient.images.ui.adapters.ImagesView;
+import com.reverso.seba.mytwitterclient.images.ui.ImagesView;
 import com.reverso.seba.mytwitterclient.lib.base.EventBus;
 
 import org.greenrobot.eventbus.Subscribe;

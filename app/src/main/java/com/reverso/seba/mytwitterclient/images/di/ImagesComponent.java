@@ -1,7 +1,7 @@
 package com.reverso.seba.mytwitterclient.images.di;
 
 import com.reverso.seba.mytwitterclient.images.ui.ImagesFragment;
-import com.reverso.seba.mytwitterclient.images.ui.ImagesPresenter;
+import com.reverso.seba.mytwitterclient.images.ImagesPresenter;
 import com.reverso.seba.mytwitterclient.lib.di.LibsModules;
 
 import javax.inject.Singleton;
