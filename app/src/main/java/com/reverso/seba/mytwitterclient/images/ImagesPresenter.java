@@ -1,4 +1,4 @@
-package com.reverso.seba.mytwitterclient.entities;
+package com.reverso.seba.mytwitterclient.images;
 
 import com.reverso.seba.mytwitterclient.images.events.ImagesEvent;
 

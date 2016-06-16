@@ -1,6 +1,6 @@
 package com.reverso.seba.mytwitterclient.images;
 
-import com.reverso.seba.mytwitterclient.entities.Images;
+import com.reverso.seba.mytwitterclient.images.entities.Image;
 
 import java.util.List;
 
@@ -14,5 +14,5 @@ public interface ImagesView {
     void hideProgress();
 
     void onError(String error);
-    void setContent(List<Images> items);
+    void setContent(List<Image> items);
 }
