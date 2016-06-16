@@ -1,4 +1,4 @@
-package com.reverso.seba.mytwitterclient.images;
+package com.reverso.seba.mytwitterclient.images.ui;
 
 
 import android.os.Bundle;
