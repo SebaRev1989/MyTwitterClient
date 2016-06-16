@@ -44,7 +44,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
         imageLoader.load(holder.imgMedia, imageTweet.getImageURL());
     }
 
-    private void setItems(List<Image> newItems) {
+    public void setItems(List<Image> newItems) {
         newItems.addAll(newItems);
         notifyDataSetChanged();
     }
