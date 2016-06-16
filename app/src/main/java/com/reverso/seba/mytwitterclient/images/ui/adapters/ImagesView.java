@@ -1,4 +1,4 @@
-package com.reverso.seba.mytwitterclient.images.ui;
+package com.reverso.seba.mytwitterclient.images.ui.adapters;
 
 import com.reverso.seba.mytwitterclient.images.entities.Image;
 
