@@ -1,4 +1,4 @@
-package com.reverso.seba.mytwitterclient.lib.base;
+package com.reverso.seba.mytwitterclient.lib;
 
 /**
  * Created by seba on 15/06/16.

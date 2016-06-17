@@ -1,4 +1,4 @@
-package com.reverso.seba.mytwitterclient.lib.base;
+package com.reverso.seba.mytwitterclient.lib;
 
 import android.widget.ImageView;
 
