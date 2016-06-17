@@ -1,4 +1,4 @@
-package com.reverso.seba.mytwitterclient.images.ui.adapters;
+package com.reverso.seba.mytwitterclient.images.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.reverso.seba.mytwitterclient.R;
 import com.reverso.seba.mytwitterclient.images.entities.Image;
-import com.reverso.seba.mytwitterclient.lib.base.ImageLoader;
+import com.reverso.seba.mytwitterclient.images.ui.OnItemClickListener;
+import com.reverso.seba.mytwitterclient.lib.ImageLoader;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
         return dataset.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.txtTweet)
         TextView txtTweet;
         @Bind(R.id.imgMedia)
@@ -62,17 +63,17 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
 
         private View view;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            this.view = itemView;
+        public ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+            this.view = view;
         }
 
-        public void setOnClickListener(final Image image, final OnItemClickListener listener) {
+        public void setOnClickListener(final Image tweet, final OnItemClickListener listener) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onItemClick(image);
+                    listener.onItemClick(tweet);
                 }
             });
         }

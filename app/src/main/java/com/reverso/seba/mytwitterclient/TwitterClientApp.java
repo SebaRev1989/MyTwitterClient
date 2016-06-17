@@ -7,7 +7,7 @@ import com.reverso.seba.mytwitterclient.images.di.DaggerImagesComponent;
 import com.reverso.seba.mytwitterclient.images.di.ImagesComponent;
 import com.reverso.seba.mytwitterclient.images.di.ImagesModule;
 import com.reverso.seba.mytwitterclient.images.ui.ImagesView;
-import com.reverso.seba.mytwitterclient.images.ui.adapters.OnItemClickListener;
+import com.reverso.seba.mytwitterclient.images.ui.OnItemClickListener;
 import com.reverso.seba.mytwitterclient.lib.di.LibsModules;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;

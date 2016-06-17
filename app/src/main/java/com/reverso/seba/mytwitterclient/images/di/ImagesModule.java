@@ -8,13 +8,13 @@ import com.reverso.seba.mytwitterclient.images.ImagesPresenter;
 import com.reverso.seba.mytwitterclient.images.ImagesPresenterImp;
 import com.reverso.seba.mytwitterclient.images.ImagesRepository;
 import com.reverso.seba.mytwitterclient.images.ImagesRepositoryImp;
-import com.reverso.seba.mytwitterclient.images.ui.adapters.ImagesAdapter;
+import com.reverso.seba.mytwitterclient.images.adapters.ImagesAdapter;
 import com.reverso.seba.mytwitterclient.images.ui.ImagesView;
-import com.reverso.seba.mytwitterclient.images.ui.adapters.OnItemClickListener;
-import com.reverso.seba.mytwitterclient.lib.base.EventBus;
-import com.reverso.seba.mytwitterclient.lib.base.ImageLoader;
+import com.reverso.seba.mytwitterclient.images.ui.OnItemClickListener;
+import com.reverso.seba.mytwitterclient.lib.EventBus;
+import com.reverso.seba.mytwitterclient.lib.ImageLoader;
 import com.twitter.sdk.android.Twitter;
-import com.twitter.sdk.android.core.Session;
+import com.twitter.sdk.android.core.TwitterSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class ImagesModule {
 
     @Provides
     @Singleton
-    ImagesAdapter providesAdapter(List< Image > dataset, ImageLoader imageLoader, OnItemClickListener clickListener){
+    ImagesAdapter providesAdapter(List<Image> dataset, ImageLoader imageLoader, OnItemClickListener clickListener){
         return new ImagesAdapter(dataset, imageLoader, clickListener);
     }
 
@@ -58,8 +58,8 @@ public class ImagesModule {
 
     @Provides
     @Singleton
-    ImagesPresenter providesImagesPresenter(ImagesView view, EventBus eventBus, ImagesInteractor interactor){
-        return new ImagesPresenterImp(view, eventBus, interactor);
+    ImagesPresenter providesImagesPresenter(EventBus eventBus, ImagesView view, ImagesInteractor interactor){
+        return new ImagesPresenterImp(eventBus, view, interactor);
     }
 
     @Provides
@@ -76,19 +76,19 @@ public class ImagesModule {
 
     @Provides
     @Singleton
-    ImagesRepository providesImagesReposory(EventBus eventBus, CustomTwitterApiClient client){
-        return new ImagesRepositoryImp(eventBus, client);
+    ImagesRepository providesImagesReposory(CustomTwitterApiClient client, EventBus eventBus){
+        return new ImagesRepositoryImp(client, eventBus);
     }
 
     @Provides
     @Singleton
-    CustomTwitterApiClient providesCustomTwitterApiClient(Session session){
+    CustomTwitterApiClient providesCustomTwitterApiClient(TwitterSession session){
         return new CustomTwitterApiClient(session);
     }
 
     @Provides
     @Singleton
-    Session providesTwitter(){
+    TwitterSession providesTwitter(){
         return Twitter.getSessionManager().getActiveSession();
     }
 }

@@ -15,12 +15,12 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.reverso.seba.mytwitterclient.R;
-import com.reverso.seba.mytwitterclient.TwitterClientApp;
 import com.reverso.seba.mytwitterclient.images.ImagesPresenter;
-import com.reverso.seba.mytwitterclient.images.di.ImagesComponent;
+import com.reverso.seba.mytwitterclient.images.adapters.ImagesAdapter;
+import com.reverso.seba.mytwitterclient.images.di.DaggerImagesComponent;
+import com.reverso.seba.mytwitterclient.images.di.ImagesModule;
 import com.reverso.seba.mytwitterclient.images.entities.Image;
-import com.reverso.seba.mytwitterclient.images.ui.adapters.ImagesAdapter;
-import com.reverso.seba.mytwitterclient.images.ui.adapters.OnItemClickListener;
+import com.reverso.seba.mytwitterclient.lib.di.LibsModules;
 
 import java.util.List;
 
@@ -33,6 +33,11 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class ImagesFragment extends Fragment implements ImagesView, OnItemClickListener {
+    @Inject
+    ImagesAdapter adapter;
+    @Inject
+    ImagesPresenter presenter;
+
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     @Bind(R.id.recyclerView)
@@ -40,23 +45,16 @@ public class ImagesFragment extends Fragment implements ImagesView, OnItemClickL
     @Bind(R.id.container)
     FrameLayout container;
 
-    @Inject
-    ImagesPresenter presenter;
-    @Inject
-    ImagesAdapter adapter;
-
-    public ImagesFragment() {
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
+
         setupInjection();
         setupRecyclerView();
         presenter.getImageTweets();
+
         return view;
     }
 
@@ -66,10 +64,12 @@ public class ImagesFragment extends Fragment implements ImagesView, OnItemClickL
     }
 
     private void setupInjection() {
-        TwitterClientApp app = (TwitterClientApp)getActivity().getApplication();
-        ImagesComponent imagesComponent = app.getImagesComponent(this, this, this);
-        imagesComponent.inject(this);
-//        presenter = imagesComponent.getPresenter();
+        DaggerImagesComponent
+                .builder()
+                .libsModules(new LibsModules(this))
+                .imagesModule(new ImagesModule(this, this))
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -80,8 +80,8 @@ public class ImagesFragment extends Fragment implements ImagesView, OnItemClickL
 
     @Override
     public void onPause() {
-        presenter.onPause();
         super.onPause();
+        presenter.onPause();
     }
 
     @Override
@@ -91,8 +91,8 @@ public class ImagesFragment extends Fragment implements ImagesView, OnItemClickL
     }
 
     @Override
-    public void onItemClick(Image image) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(image.getTweetUrl()));
+    public void onItemClick(Image tweet) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet.getTweetUrl()));
         startActivity(intent);
     }
 
@@ -124,11 +124,5 @@ public class ImagesFragment extends Fragment implements ImagesView, OnItemClickL
     @Override
     public void setContent(List<Image> items) {
         adapter.setItems(items);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }

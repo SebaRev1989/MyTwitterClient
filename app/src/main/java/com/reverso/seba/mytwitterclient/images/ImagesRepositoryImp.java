@@ -3,7 +3,7 @@ package com.reverso.seba.mytwitterclient.images;
 import com.reverso.seba.mytwitterclient.api.CustomTwitterApiClient;
 import com.reverso.seba.mytwitterclient.images.entities.Image;
 import com.reverso.seba.mytwitterclient.images.events.ImagesEvent;
-import com.reverso.seba.mytwitterclient.lib.base.EventBus;
+import com.reverso.seba.mytwitterclient.lib.EventBus;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -19,78 +19,72 @@ import java.util.List;
  * Created by seba on 16/06/16.
  */
 public class ImagesRepositoryImp implements ImagesRepository {
-    private EventBus eventBus;
-    private CustomTwitterApiClient client;
+    private final EventBus eventBus;
+    private final CustomTwitterApiClient client;
     private final static int TWEET_COUNT = 100;
 
-    public ImagesRepositoryImp(EventBus eventBus, CustomTwitterApiClient client) {
-        this.eventBus = eventBus;
+    public ImagesRepositoryImp(CustomTwitterApiClient client, EventBus eventBus) {
         this.client = client;
+        this.eventBus = eventBus;
     }
 
     @Override
     public void getImages() {
-        Callback<List<Tweet>> callback = new Callback<List<Tweet>>() {
-            @Override
-            public void success(Result<List<Tweet>> result) {
-                List<Image> items = new ArrayList<Image>();
-                for (Tweet tweet : result.data) {
-                    if (containsImages(tweet)) {
-                        Image tweetModel = new Image();
-
-                        tweetModel.setId(tweet.idStr);
-                        tweetModel.setFavoriteCount(tweet.favoriteCount);
-
-                        String tweetText = tweet.text;
-                        int index = tweetText.indexOf("http");
-                        if (index >0) {
-                            tweetText = tweetText.substring(0, index);
-                        }
-
-                        tweetModel.setTweetText(tweetText);
-
-                        MediaEntity currentPhoto = tweet.entities.media.get(0);
-                        String imageUrl = currentPhoto.mediaUrl;
-                        tweetModel.setImageURL(imageUrl);
-
-                        items.add(tweetModel);
-                    }
-                }
-
-                Collections.sort(items, new Comparator<Image>() {
+        client.getTimelineService().homeTimeline(TWEET_COUNT, true, true, true, true,
+                new Callback<List<Tweet>>() {
                     @Override
-                    public int compare(Image image, Image t1) {
-                        return t1.getFavoriteCount() - image.getFavoriteCount();
+                    public void success(Result<List<Tweet>> result) {
+                        List<Image> items = new ArrayList<Image>();
+                        for (Tweet tweet : result.data) {
+                            if (checkIfTweetHasImage(tweet)) {
+                                Image tweetModel = new Image();
+
+                                tweetModel.setId(tweet.idStr);
+                                tweetModel.setFavoriteCount(tweet.favoriteCount);
+
+                                String tweetText = tweet.text;
+                                int index = tweetText.indexOf("http");
+                                if (index > 0) {
+                                    tweetText = tweetText.substring(0, index);
+                                }
+                                tweetModel.setTweetText(tweetText);
+
+                                MediaEntity currentPhoto = tweet.entities.media.get(0);
+                                String imageURL = currentPhoto.mediaUrl;
+                                tweetModel.setImageURL(imageURL);
+
+                                items.add(tweetModel);
+                            }
+                        }
+                        Collections.sort(items, new Comparator<Image>() {
+                            @Override
+                            public int compare(Image t1, Image t2) {
+                                return t2.getFavoriteCount() - t1.getFavoriteCount();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void failure(TwitterException e) {
+                        postEvent(e.getMessage());
                     }
                 });
-                post(items);
-            }
-
-            @Override
-            public void failure(TwitterException e) {
-                post(e.getLocalizedMessage());
-            }
-        };
-        client.getTimelineService().homeTimeline(TWEET_COUNT, true, true, true, true, callback);
     }
 
-    private boolean containsImages(Tweet tweet) {
-        return (tweet.entities != null &&
+    private boolean checkIfTweetHasImage(Tweet tweet) {
+        return  tweet.entities != null &&
                 tweet.entities.media != null &&
-                !tweet.entities.media.isEmpty());
+                !tweet.entities.media.isEmpty();
     }
 
-    private void post(List<Image> items) {
-        post(items, null);
-    }
-
-    private void post(String error){
-        post(null, error);
-    }
-
-    private void post(List<Image> items, String error) {
+    private void postEvent(String error){
         ImagesEvent event = new ImagesEvent();
         event.setError(error);
+        eventBus.post(event);
+    }
+
+    private void postEvent(List<Image> items) {
+        ImagesEvent event = new ImagesEvent();
         event.setImages(items);
         eventBus.post(event);
     }

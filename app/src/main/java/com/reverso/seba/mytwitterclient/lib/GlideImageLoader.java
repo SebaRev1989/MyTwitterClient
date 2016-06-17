@@ -1,10 +1,11 @@
 package com.reverso.seba.mytwitterclient.lib;
 
+import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.reverso.seba.mytwitterclient.lib.base.ImageLoader;
 
 /**
  * Created by seba on 15/06/16.
@@ -12,8 +13,8 @@ import com.reverso.seba.mytwitterclient.lib.base.ImageLoader;
 public class GlideImageLoader implements ImageLoader {
     private RequestManager glideRequestManager;
 
-    public GlideImageLoader(RequestManager glideRequestManager) {
-        this.glideRequestManager = glideRequestManager;
+    public GlideImageLoader(Fragment fragment) {
+        this.glideRequestManager = Glide.with(fragment);
     }
 
     @Override

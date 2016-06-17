@@ -2,21 +2,24 @@ package com.reverso.seba.mytwitterclient.images;
 
 import com.reverso.seba.mytwitterclient.images.events.ImagesEvent;
 import com.reverso.seba.mytwitterclient.images.ui.ImagesView;
-import com.reverso.seba.mytwitterclient.lib.base.EventBus;
+import com.reverso.seba.mytwitterclient.lib.EventBus;
+import com.reverso.seba.mytwitterclient.images.entities.Image;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 /**
  * Created by seba on 16/06/16.
  */
 public class ImagesPresenterImp implements ImagesPresenter {
-    private ImagesView view;
     private EventBus eventBus;
-    private ImagesInteractor interactor;
+    private ImagesView view;
+    private final ImagesInteractor interactor;
 
-    public ImagesPresenterImp(ImagesView view, EventBus eventBus, ImagesInteractor interactor) {
-        this.view = view;
+    public ImagesPresenterImp(EventBus eventBus, ImagesView view, ImagesInteractor interactor) {
         this.eventBus = eventBus;
+        this.view = view;
         this.interactor = interactor;
     }
 
@@ -32,29 +35,30 @@ public class ImagesPresenterImp implements ImagesPresenter {
 
     @Override
     public void onDestroy() {
-        view = null;
+        this.view = null;
     }
 
     @Override
     public void getImageTweets() {
-        if (view != null) {
+        if (this.view != null) {
             view.hideImages();
             view.showProgress();
         }
-        interactor.execute();
+        this.interactor.getImagesList();
     }
 
     @Override
     @Subscribe
     public void onEventMainThread(ImagesEvent event) {
         String errorMsg = event.getError();
-        if (view != null) {
+        if (this.view != null) {
             view.showImages();
             view.hideProgress();
             if (errorMsg != null) {
-                view.onError(errorMsg);
+                this.view.onError(errorMsg);
             } else {
-                view.setContent(event.getImages());
+                List<Image> items = event.getImages();
+                this.view.setContent(items);
             }
         }
     }
