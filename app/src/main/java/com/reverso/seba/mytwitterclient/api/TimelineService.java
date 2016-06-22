@@ -1,10 +1,10 @@
 package com.reverso.seba.mytwitterclient.api;
 
 import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.core.Callback;
 
 import java.util.List;
 
-import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
 

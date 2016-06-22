@@ -28,7 +28,6 @@ public class ImagesRepositoryImp implements ImagesRepository {
         this.eventBus = eventBus;
     }
 
-    @Override
     public void getImages() {
         client.getTimelineService().homeTimeline(TWEET_COUNT, true, true, true, true,
                 new Callback<List<Tweet>>() {
@@ -57,11 +56,11 @@ public class ImagesRepositoryImp implements ImagesRepository {
                             }
                         }
                         Collections.sort(items, new Comparator<Image>() {
-                            @Override
                             public int compare(Image t1, Image t2) {
                                 return t2.getFavoriteCount() - t1.getFavoriteCount();
                             }
                         });
+                        postEvent(items);
                     }
 
                     @Override
