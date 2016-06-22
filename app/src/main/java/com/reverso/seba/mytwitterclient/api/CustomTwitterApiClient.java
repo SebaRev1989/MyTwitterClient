@@ -1,6 +1,5 @@
 package com.reverso.seba.mytwitterclient.api;
 
-import com.reverso.seba.mytwitterclient.TwitterClientApp;
 import com.twitter.sdk.android.core.Session;
 import com.twitter.sdk.android.core.TwitterApiClient;
 

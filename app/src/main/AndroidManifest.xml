@@ -23,7 +23,10 @@
             android:name="io.fabric.ApiKey"
             android:value="d620033db825aba99a358675058217e22fe04c3d" />
 
-        <activity android:name=".main.ui.MainActivity"></activity>
+        <activity
+            android:name=".main.ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

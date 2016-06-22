@@ -30,12 +30,6 @@ public class LibsModules {
         return  new GlideImageLoader(fragment);
     }
 
-    /*@Provides
-    @Singleton
-    RequestManager providesRequestManager(Fragment fragment) {
-        return Glide.with(fragment);
-    }*/
-
     @Provides
     @Singleton
     Fragment providesFragment() {
@@ -47,10 +41,4 @@ public class LibsModules {
     EventBus providesEventBus() {
         return new GreenRobotEventBus();
     }
-
-    /*@Provides
-    @Singleton
-    org.greenrobot.eventbus.EventBus providesLibraryEventBus() {
-        return org.greenrobot.eventbus.EventBus.getDefault();
-    }*/
 }
