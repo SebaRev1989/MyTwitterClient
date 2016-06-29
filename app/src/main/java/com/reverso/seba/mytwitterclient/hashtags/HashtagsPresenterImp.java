@@ -5,6 +5,8 @@ import com.reverso.seba.mytwitterclient.hashtags.events.HashtagEvent;
 import com.reverso.seba.mytwitterclient.hashtags.ui.HashtagsView;
 import com.reverso.seba.mytwitterclient.lib.EventBus;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 /**
@@ -46,6 +48,7 @@ public class HashtagsPresenterImp implements HashtagsPresenter {
     }
 
     @Override
+    @Subscribe
     public void onEventMainThread(HashtagEvent event) {
         String errorMsg = event.getError();
         if (this.hashtagsView != null) {
