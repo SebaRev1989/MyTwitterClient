@@ -9,7 +9,7 @@ public class Hashtag {
     private String id;
     private String tweetText;
     private int favoriteCount;
-    private List<Hashtag> hashtags;
+    private List<String> hashtags;
     private final static String BASE_TWEET_URL = "https://twitter.com/null/status/";
 
     public String getId() {
@@ -36,11 +36,11 @@ public class Hashtag {
         this.favoriteCount = favoriteCount;
     }
 
-    public List<Hashtag> getHashtags() {
+    public List<String> getHashtags() {
         return hashtags;
     }
 
-    public void setHashtags(List<Hashtag> hashtags) {
+    public void setHashtags(List<String> hashtags) {
         this.hashtags = hashtags;
     }
 
