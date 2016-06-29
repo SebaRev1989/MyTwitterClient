@@ -1,4 +1,4 @@
-package com.reverso.seba.mytwitterclient.hashtags;
+package com.reverso.seba.mytwitterclient.hashtags.ui;
 
 
 import android.os.Bundle;

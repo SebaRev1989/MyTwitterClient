@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import com.reverso.seba.mytwitterclient.LoginActivity;
 import com.reverso.seba.mytwitterclient.R;
-import com.reverso.seba.mytwitterclient.hashtags.HashtagsFragment;
+import com.reverso.seba.mytwitterclient.hashtags.ui.HashtagsFragment;
 import com.reverso.seba.mytwitterclient.images.ui.ImagesFragment;
 import com.reverso.seba.mytwitterclient.main.ui.adapters.MainSectionsPagerAdapter;
 import com.twitter.sdk.android.Twitter;
