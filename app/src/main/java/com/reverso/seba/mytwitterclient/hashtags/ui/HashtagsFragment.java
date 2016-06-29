@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,17 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.reverso.seba.mytwitterclient.R;
+import com.reverso.seba.mytwitterclient.TwitterAppModule;
 import com.reverso.seba.mytwitterclient.hashtags.HashtagsPresenter;
 import com.reverso.seba.mytwitterclient.hashtags.adapters.HashtagsAdapter;
+import com.reverso.seba.mytwitterclient.hashtags.di.DaggerHashtagsComponent;
+import com.reverso.seba.mytwitterclient.hashtags.di.HashtagsModules;
 import com.reverso.seba.mytwitterclient.hashtags.entities.Hashtag;
+import com.reverso.seba.mytwitterclient.lib.di.LibsModules;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,7 +43,9 @@ public class HashtagsFragment extends Fragment implements HashtagsView, OnItemCl
     @Bind(R.id.container)
     FrameLayout container;
 
+    @Inject
     HashtagsPresenter presenter;
+    @Inject
     HashtagsAdapter adapter;
 
     public HashtagsFragment() {
@@ -66,7 +75,28 @@ public class HashtagsFragment extends Fragment implements HashtagsView, OnItemCl
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content, container, false);
         ButterKnife.bind(this, view);
+
+        setupInjection();
+        setupRecyclerView();
+
+        presenter.getHashtagTweets();
         return view;
+    }
+
+    private void setupRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void setupInjection() {
+        DaggerHashtagsComponent
+                .builder()
+                .libsModules(new LibsModules(this))
+                .twitterAppModule(new TwitterAppModule(getContext()))
+                .hashtagsModules(new HashtagsModules(this, this))
+                .build()
+                .inject(this);
     }
 
     @Override
