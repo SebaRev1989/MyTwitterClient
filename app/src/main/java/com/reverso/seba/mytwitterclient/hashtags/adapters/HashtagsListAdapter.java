@@ -25,7 +25,7 @@ public class HashtagsListAdapter extends RecyclerView.Adapter<HashtagsListAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_hashtag, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_hashtag_text, parent, false);
         return new ViewHolder(view);
     }
 
