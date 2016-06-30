@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         setupAdapter();
+
+        setTitle(String.format(getString(R.string.hello_user), Twitter.getSessionManager().getActiveSession().getUserName()));
     }
 
     private void setupAdapter() {

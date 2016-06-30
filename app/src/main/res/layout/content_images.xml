@@ -24,5 +24,14 @@
             android:id="@+id/txtTweet"
             android:layout_below="@+id/imgMedia"
             android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:id="@+id/txtFavs"
+            android:layout_below="@+id/txtTweet"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/holo_green_light"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
